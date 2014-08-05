@@ -1,26 +1,50 @@
+
 <!DOCTYPE html>
 <html>
   <head>
+    <title>Ralph's Twittler</title>
     <script src="jquery.js"></script>
     <script src="data_generator.js"></script>
+    <style type="text/css">
+      #container .column{
+        position: relative;
+      }
+      #container .left{
+        float: left;
+        width: 250px;
+      }
+      #container .twittArea{
+        float: center;
+        width:700px
+      }
+
+    </style>
   </head>
   <body>
+    <div id="container" style="width:1000px">
+      
+      <div id="header">
+        <h2 style="text-align:center">Ralph's Twittler Implementation</h2>
+      </div>
+
+      <div id="leftColumn" class="left column">
+        <h4 style="text-align:left">People You're Following</h4>
+      </div>
+
+      <div id="twittStreamColumn" class="twittArea center column">
+        <div id="composeArea" style="float:right">
+          
+          <textarea id="twittComposeField" type="text" cols="50" rows="3"   placeholder="Click to compose twitt"></textarea>
+          <button id="sendTwittButton" class="button">Send</button>
+        
+        </div>
+        <div id="twittStream" class="twittStream"></div>
+      </div>
+    </div>
+
+
     <script>
-
-      $(document).ready(function(){
-        var $body = $('body');
-        $body.html('');
-
-        var index = streams.home.length - 1;
-        while(index >= 0){
-          var tweet = streams.home[index];
-          var $tweet = $('<div></div>');
-          $tweet.text('@' + tweet.user + ': ' + tweet.message);
-          $tweet.appendTo($body);
-          index -= 1;
-        }
-
-      });
+      
 
     </script>
   </body>
