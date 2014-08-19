@@ -47,8 +47,9 @@
         <h2 style="text-align:center">Ralph's Twittler Implementation</h2>
       </div>
 
-      <div id="leftColumn" class="left column">
-        <h4 style="text-align:center; color:white">People You're Following</h4>
+      <div id="usersColumn" class="left column">
+        <h3 style="text-align:center; color:white">People You're Following</h3>
+        <table id="usersTable"></table>
       </div>
 
       <div id="twittStreamColumn" class="twittArea center column">
@@ -60,9 +61,7 @@
         </div>
         
         <div id="twittStreamContainer" >
-          <table class="twittStreamTable">
-            
-          </table>
+          <table id="twittStreamTable"></table>
         </div>
       
       </div>
@@ -76,11 +75,11 @@
       //helper fuction to package and display array of twitts 
       var displayTwitts = function(twitts){
         //first clear twitts
-        $('.twittStreamTable tr').remove();
+        $('#twittStreamTable tr').remove();
 
         for (var i=0; i<twitts.length; i++){
-          var newTwittBox = $('<tr><td style="text_align:left"><b>@'+twitts[i].user+':</b><br/>' +twitts[i].message+'  </td><td style="text_align:right">Written: '+twitts[i].created_at+'</td></tr>');
-          $('.twittStreamTable').prepend(newTwittBox);
+          var newTwittBox = $('<tr><td style="text-align:left"><b>@'+twitts[i].user+':</b><br/>' +twitts[i].message+'  </td><td style="text-align:right">Written on: '+twitts[i].created_at.toDateString()+' at: '+twitts[i].created_at.toLocaleTimeString()+'</td></tr>');
+          $('#twittStreamTable').prepend(newTwittBox);
         }
       };
 
@@ -105,6 +104,26 @@
 
         //display all initial twitts
         displayTwitts(streams.home);
+
+        //populate followed users column
+        for (var user in streams.users){
+          if(user === window.visitor){
+            $('#usersTable').prepend($('<tr><td style="text-align:center; color:white" id="homeLink"><b>Home</b></td></tr>'));
+            
+            $("#homeLink").on('click', function(){
+              currentStream = streams.home;
+              displayTwitts(currentStream);
+            });
+            
+            continue;
+          }
+          $('#usersTable').append($('<tr><td style="text-align:center; color:white" id="'+user+'Link"><b>'+user+'</b></td></tr>'));
+
+          $("#"+user+"Link").on('click', function(){
+            currentStream = streams.users[$(this).text()];
+            displayTwitts(currentStream);
+          });
+        }
 
         //begin timer to display new twitts periodically
         setInterval(function(){displayTwitts(currentStream);}, 2500);
