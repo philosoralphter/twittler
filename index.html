@@ -70,19 +70,49 @@
 
 
     <script>
-      
-      var displayTwitt = function(twitt){
-        var newTwittBox = $('<tr><td style="text_align:left"><b>'+twitt.user+':</b><br/>' +twitt.message+'  </td><td style="text_align:right">Written: '+twitt.created_at+'</td></tr>');
-        $('.twittStreamTable').prepend(newTwittBox);
+      //helper fuction to package and display array of twitts 
+      var displayTwitts = function(twitts){
+        //first clear twitts
+        $('.twittStreamTable tr').remove();
 
+        for (var i=0; i<twitts.length; i++){
+          var newTwittBox = $('<tr><td style="text_align:left"><b>@'+twitts[i].user+':</b><br/>' +twitts[i].message+'  </td><td style="text_align:right">Written: '+twitts[i].created_at+'</td></tr>');
+          $('.twittStreamTable').prepend(newTwittBox);
+        }
       };
 
-      $(document).ready(function(){
-        console.log(streams.home[0].created_at);
-        //display all initial twitts
-        for (var i=0; i<streams.home.length; i++){
-          displayTwitt(streams.home[i]);
+      //helper function to send twitt from input area
+      var sendTwitt = function(){
+        if ($('#twittComposeField').val()){
+          writeTweet($('#twittComposeField').val());
+          $('#twittComposeField').val('');
+          displayTwitts(streams.home);
         }
+      };
+
+
+
+      $(document).ready(function(){
+        //tests
+
+        //ask for user name and create blank twitt collection
+        //**********hardcoded for easier testing. remove for product.***
+        window.visitor = "Ralph";//prompt("What is your username?");
+        streams.users[window.visitor]= [];
+
+        //display all initial twitts
+        displayTwitts(streams.home);
+
+        //Add Button functionality to post twitts
+        $('#sendTwittButton').on('click', sendTwitt);
+        
+        //Add 'enter' key support to post twitts
+        $("#twittComposeField").on("keyup", function(e){
+          if (e.which == 13){
+            sendTwitt();
+          }
+        });
+
       });
 
     </script>
