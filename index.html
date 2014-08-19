@@ -70,6 +70,9 @@
 
 
     <script>
+      //keep track of current stream
+      var currentStream = streams.home;
+
       //helper fuction to package and display array of twitts 
       var displayTwitts = function(twitts){
         //first clear twitts
@@ -103,6 +106,9 @@
         //display all initial twitts
         displayTwitts(streams.home);
 
+        //begin timer to display new twitts periodically
+        setInterval(function(){displayTwitts(currentStream);}, 2500);
+
         //Add Button functionality to post twitts
         $('#sendTwittButton').on('click', sendTwitt);
         
@@ -113,7 +119,7 @@
           }
         });
 
-      });
+      });//END document ready function
 
     </script>
   </body>
