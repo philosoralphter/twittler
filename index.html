@@ -6,9 +6,10 @@
     <script src="jquery.js"></script>
     <script src="data_generator.js"></script>
     <style type="text/css">
+     
+
      body{
       background-color: gray;
-
      }
 
       #header{
@@ -18,10 +19,10 @@
         background-color: green;
         border-top-left-radius: 15px;
         border-top-right-radius: 15px;
+        margin-top: 5px;
+        margin-bottom: 10px
       }
 
-      #container .column{
-      }
       #container .column.left{
         background-color: blue;
         float: left;
@@ -29,14 +30,9 @@
       }
       #container .column.center{
         float: left;
-        width: 700px;
+        width: 750px;
         background-color: red;
       }
-
-      table{
-        border: green 2px;
-      }
-      
 
     </style>
   </head>
@@ -74,9 +70,7 @@
 
       //helper fuction to package and display array of twitts 
       var displayTwitts = function(twitts){
-        //first clear twitts
         $('#twittStreamTable tr').remove();
-
         for (var i=0; i<twitts.length; i++){
           var newTwittBox = $('<tr><td style="text-align:left"><b>@'+twitts[i].user+':</b><br/>' +twitts[i].message+'  </td><td style="text-align:right">Written on: '+twitts[i].created_at.toDateString()+' at: '+twitts[i].created_at.toLocaleTimeString()+'</td></tr>');
           $('#twittStreamTable').prepend(newTwittBox);
@@ -95,11 +89,9 @@
 
 
       $(document).ready(function(){
-        //tests
 
         //ask for user name and create blank twitt collection
-        //**********hardcoded for easier testing. remove for product.***
-        window.visitor = "Ralph";//prompt("What is your username?");
+        window.visitor = prompt("What is your username?");
         streams.users[window.visitor]= [];
 
         //display all initial twitts
@@ -125,7 +117,7 @@
           });
         }
 
-        //begin timer to display new twitts periodically
+        //begin global timer to display new twitts periodically
         setInterval(function(){displayTwitts(currentStream);}, 2500);
 
         //Add Button functionality to post twitts
